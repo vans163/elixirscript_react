@@ -31,7 +31,8 @@ defmodule ESReact.Router do
             path = navigate_1(path)
             ESReact.FFI.History.replaceState(nil, nil, path)
         end)
-        navigate_1(ESReact.FFI.Location.pathname(), false)
+        newPath = navigate_1(ESReact.FFI.Location.pathname(), false)
+        ESReact.FFI.History.replaceState(nil, nil, newPath)
     end
 
     def init(router_func) do
