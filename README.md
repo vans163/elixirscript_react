@@ -1,41 +1,51 @@
+# elixirscript_react
+ElixirScript React Helper
+
+<p align="center">
+  <img src="http://elixir-recipes.github.io/images/logo.png" width="200" />
+  <img src="https://thinkster.io/assets/homepage/react-59cb90b6077ca4205157db73b878d95d2a2c6c21dbac690842ef84c90fb0421b.png" width="200" />
+</p>
+  
+  
+### Status
 This project is very much a work in progress and things may change quickly and suddenly.
 If you decide to use this, I recommend tagging a commit hash to prevent your project from 
 breaking in the future.  
   
-Detail:  
-  
+### Details
 This is a utility wrapper around React for use with Elixirscript.  It takes care of the 
 few moving parts required to get React working smoothly.  
   
 This library assumes you use React in a certain way.  The library assumes you use stateless 
 components and a monolithic global root state.  The monolithic state is a simplicty
 optimization for now, which can probably be lifted in the future.  
-  
+
+### Usage
 To use elixirscript_react you would need a browser that supports:  
   
-React 15+ (the version that seperated react into React, ReactDOM and ReactDOMServer)  
-History API (If you use routing)  
-You need module support for ES6 or a transcompiler since elixirscript outputs ES6.  
+ - React 15+ (the version that seperated react into React, ReactDOM and ReactDOMServer)  
+ - History API (If you use routing)  
+ - Module support or a transcompiler since elixirscript outputs ES6.  
   
 Take note! (If you use State if/and Router)  
   
 ESReact.State initial state MUST be a map  
   
 Using ESReact.State places a unique atom key into the state called  
-```
-:esreact_render_func, this key holds the render callback function
+```elixir
+:esreact_render_func #this key holds the render callback function
 ```
   
 
 ESReact.Router depends on ESReact.State, you cannot use the router
 without using ESReact.State  
   
-using ESReact.Router places unique atom keys into the state called  
+Using ESReact.Router places unique atom keys into the state called  
+```elixir
+:esreact_route_func #this key holds the route callback function
 ```
-:esreact_route_func, this key holds the route callback function
-```
-```
-:esreact_route, this key holds the the result of the route callback
+```elixir
+:esreact_route #this key holds the the result of the route callback
 ```
   
   
@@ -45,6 +55,7 @@ Enable ES6 module support
 https://medium.com/dev-channel/es6-modules-in-chrome-canary-m60-ba588dfb8ab7
 ```
 
+index.html
 ```html
 <!DOCTYPE html>
 <html>
@@ -69,7 +80,7 @@ https://medium.com/dev-channel/es6-modules-in-chrome-canary-m60-ba588dfb8ab7
 ```
 
 
-
+my_functional_react_app.ex
 ```elixir
 defmodule MyFunctionalReactApp
     import ESReact, only: [react: 1]
@@ -162,8 +173,7 @@ defmodule MyFunctionalReactApp
 end
 ```
 
-
-
+mix.exs
 ```elixir
 defmodule MyFunctionalReactApp.Mixfile do
     use Mix.Project
@@ -189,8 +199,8 @@ defmodule MyFunctionalReactApp.Mixfile do
     ]
 
     def deps, do: [
-        {:elixir_script, path: "../elixirscript"},
-        {:elixirscript_react, path: "../elixirscript_react"}
+        {:elixir_script, git: "https://github.com/elixirscript/elixirscript.git"},
+        {:elixirscript_react, git: "https://github.com/vans163/elixirscript_react.git"}
     ]
 end
 ```
