@@ -1,6 +1,9 @@
 defmodule ESReact do
     alias ESReact.FFI.React, as: React
 
+    def fix_binary(true), do: true
+    def fix_binary(false), do: false
+    def fix_binary(nil), do: nil
     def fix_binary(atom) when is_atom(atom), do: Atom.to_string(atom)
     def fix_binary(list) when is_list(list), do: :unicode.characters_to_binary(list)
     #def fix_binary(int) when is_integer(int), do: :erlang.integer_to_binary(int)
@@ -11,7 +14,7 @@ defmodule ESReact do
     def fix_attributes(proplist) when is_list(proplist), do:
         :lists.map(fn({k,v})-> {fix_binary(k), fix_binary(v)} end, proplist)
     def fix_attributes(map), do:
-        :maps.fold(fn(k,v,a)-> :maps.put(fix_binary(k), fix_binary(v),a) end, %{}, map)
+        :maps.fold(fn(k,v,a)-> :maps.put(fix_binary(k), fix_binary(v), a) end, %{}, map)
 
     def react_ast({tag, attributes, child}) when not is_list(child) do
         React.createElement(

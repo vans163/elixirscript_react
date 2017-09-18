@@ -27,8 +27,26 @@ defmodule ESReact.State do
         end
     end
 
+    def sd(key, render \\ true) do
+        {oldState, newState} = Agent.get_and_update(@agent_name, fn(state)-> 
+            newState = Map.delete(state, key); {{state, newState}, newState}
+        end)
+        if render do
+            srender(oldState, newState)
+        end
+    end
+
     def srender(oldState, newState) when oldState == newState, do: nil
     def srender(oldState, newState) do
+        #route_func = Map.get(newState, :esreact_route_func)
+        #if route_func do
+        #    oldroute = Map.get(newState, :esreact_route)
+        #    newroute = ESReact.Router.navigate_1(oldroute, false)
+        #    if oldroute != newroute do
+
+        #    end
+        #end
+
         root_render = Map.get(newState, :esreact_render_func)
         root_render.(oldState, newState)
     end
